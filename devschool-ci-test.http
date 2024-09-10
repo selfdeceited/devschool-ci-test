@@ -1,0 +1,6 @@
+@devschool_ci_test_HostAddress = http://localhost:5048
+
+GET {{devschool_ci_test_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
