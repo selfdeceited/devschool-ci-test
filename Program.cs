@@ -21,7 +21,10 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/", () => $"HI from {Environment.GetEnvironmentVariable("Env") ?? "local machine"}");
+app.MapGet("/", () => $"""
+Hi from {Environment.GetEnvironmentVariable("Env") ?? "local machine"}.
+Build #: `{Environment.GetEnvironmentVariable("BuildNumber") ?? "dev"}`
+""");
 
 app.MapGet("/weatherforecast", () =>
 {
