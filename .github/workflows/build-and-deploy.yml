@@ -18,7 +18,20 @@ jobs:
           build-number: ${{github.run_number}}
       - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend devschool-ci-test.csproj
-
+      - name: Login to GitHub container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: selfdeceited
+          password: ${{ secrets.GHCR_PUBLISH_TOKEN }}
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          file: ./artifacts/backend/Dockerfile
+          github-token: ${{ secrets.GHCR_PUBLISH_TOKEN }}
+          push: true
+          context: .
+          tags: ghcr.io/selfdeceited/devschool-ci-test:${{ github.run_number }}
   deploy:
     runs-on: ubuntu-latest
     needs: ['build']
