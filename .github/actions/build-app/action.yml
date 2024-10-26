@@ -9,6 +9,10 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: 'Let the world know!'
+      shell: bash
+      run: |
+          echo "### Building build ${{ inputs.build-number }}" >> $GITHUB_STEP_SUMMARY
     - name: build
       shell: bash
       env:
