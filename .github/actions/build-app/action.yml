@@ -16,7 +16,7 @@ runs:
     - name: build
       shell: bash
       env:
-        BUILD_NUMBER: ${{ inputs.build-number }}
+        GH_BUILD_NUMBER: ${{ inputs.build-number }}
       run: dotnet build --configuration Release DevschoolCiTest.sln
     - name: save artifact
       uses: actions/upload-artifact@v4

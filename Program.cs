@@ -23,7 +23,7 @@ var summaries = new[]
 
 app.MapGet("/", () => $"""
 Hi from {Environment.GetEnvironmentVariable("Env") ?? "local machine"}.
-Build #: `{Environment.GetEnvironmentVariable("BuildNumber") ?? "dev"}`
+Build #: `{Environment.GetEnvironmentVariable("GH_BUILD_NUMBER") ?? "dev"}`
 """);
 
 app.MapGet("/weatherforecast", () =>
