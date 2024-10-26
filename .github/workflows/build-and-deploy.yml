@@ -16,6 +16,8 @@ jobs:
         uses: ./.github/actions/build-app
         with:
           build-number: ${{github.run_number}}
+      - name: publish artifacts
+        run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend devschool-ci-test.csproj
 
   deploy:
     runs-on: ubuntu-latest
