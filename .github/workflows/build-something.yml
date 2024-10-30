@@ -17,6 +17,8 @@ jobs:
           dotnet-version: 8.0.100
       - name: Build
         uses: ./.github/actions/build-app
+        with:
+          build-number: ${{ github.run_number }}
         
 
   deploy:

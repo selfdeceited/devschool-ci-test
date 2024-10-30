@@ -1,8 +1,19 @@
 name: Build our .Net app
 description: Build our .Net app
+
+
+inputs:
+  build-number:
+    description: Build number
+    required: true
+
 runs:
   using: composite
   steps:
+    - name: 'show build number!'
+      shell: bash
+      run: |
+        echo "### Building build number: ${{ inputs.build-number }}"
     - name: Build
       shell: bash
       run: dotnet build --configuration=Release DevSchool.Ci.sln
