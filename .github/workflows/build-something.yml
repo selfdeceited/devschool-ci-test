@@ -7,7 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'build'
+      - name: 'echo stuff'
+        run: echo 'build'
+      - name: Checkout
+        uses: actions/checkout@v4
 
   deploy:
     needs: [build]
