@@ -1,25 +1,21 @@
-name: build and deploy live translation
-
+name: 'Build and deploy app :)'
 on:
   push:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 'echo stuff'
-        run: echo 'build'
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup dotnet
+      - name: setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.100
-      - name: Build
+          dotnet-version: '8.0.100'
+      - name: build
         uses: ./.github/actions/build-app
         with:
-          build-number: ${{ github.run_number }}
-      - name: Publish
+          build-number: ${{github.run_number}}
+      - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
       - name: Login to GitHub container registry
         uses: docker/login-action@v3
@@ -34,12 +30,12 @@ jobs:
           github-token: ${{ secrets.GHCR_PUBLISH_TOKEN }}
           push: true
           context: .
-          tags: ghcr.io/selfdeceited/devschool-ci-test:${{ github.run_number }}-live
+          tags: ghcr.io/selfdeceited/devschool-ci-test:${{ github.run_number }}-post
           build-args: |
             "GH_BUILD_NUMBER=${{ github.run_number }}"
   deploy:
     needs: [build]
-    if: ${{ github.ref == 'ref/heads/main'}}
+    if: ${{ github.ref == 'refs/heads/main' }}
     uses: ./.github/workflows/deploy-app.yml
     with:
       image_number: ${{ github.run_number }}

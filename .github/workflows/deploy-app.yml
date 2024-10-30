@@ -1,18 +1,16 @@
 name: Deploy
 on:
-  workflow_dispatch:
-    inputs:
-      image_number:
-        description: image number
-        required: true
-        type: string
   workflow_call:
     inputs:
       image_number:
-        description: image number
         required: true
         type: string
-
+  workflow_dispatch:
+    inputs:
+      image_number:
+        description: Image number
+        required: true
+        type: string
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -27,5 +25,5 @@ jobs:
           app-name: human-atalanta
           service-name: devschool-ci-test
           service-instance-type: free
-          docker: ghcr.io/selfdeceited/devschool-ci-test:${{ inputs.image_number }}-live
+          docker: ghcr.io/selfdeceited/devschool-ci-test:${{ inputs.image_number }}-post
           docker-private-registry-secret: ghrc_cred

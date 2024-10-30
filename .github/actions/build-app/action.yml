@@ -1,23 +1,22 @@
-name: Build our .Net app
-description: Build our .Net app
-
-
+name: 'build prod-ready app'
+description: 'this is a description'
 inputs:
   build-number:
-    description: Build number
+    description: Build Number
     required: true
-
 runs:
   using: composite
   steps:
-    - name: 'show build number!'
+    - name: 'Let the world know!'
       shell: bash
       run: |
-        echo "### Building build number: ${{ inputs.build-number }}" >> $GITHUB_STEP_SUMMARY
-    - name: Build
+          echo "### Building build ${{ inputs.build-number }}" >> $GITHUB_STEP_SUMMARY
+    - name: build
       shell: bash
-      run: dotnet build --configuration=Release DevSchool.Ci.sln
-    - name: Upload artifact
+      env:
+        GH_BUILD_NUMBER: ${{ inputs.build-number }}
+      run: dotnet build --configuration Release DevSchool.Ci.sln
+    - name: save artifact
       uses: actions/upload-artifact@v4
       with:
         name: built-app
