@@ -1,0 +1,8 @@
+name: Build our .Net app
+description: Build our .Net app
+runs:
+  using: composite
+  steps:
+    - name: Build
+      shell: bash
+      run: dotnet build --configuration=Release DevSchool.Ci.sln
