@@ -39,7 +39,7 @@ jobs:
             "GH_BUILD_NUMBER=${{ github.run_number }}"
   deploy:
     needs: [build]
-    if: ${{ github.ref == 'ref/heads/master'}}
+    if: ${{ github.ref == 'ref/heads/main'}}
     uses: ./.github/workflows/deploy-app.yml
     with:
       image_number: ${{ github.run_number }}
