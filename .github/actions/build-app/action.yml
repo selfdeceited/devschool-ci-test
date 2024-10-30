@@ -13,7 +13,7 @@ runs:
     - name: 'show build number!'
       shell: bash
       run: |
-        echo "### Building build number: ${{ inputs.build-number }} >> $GITHUB_STEP_SUMMARY"
+        echo "### Building build number: ${{ inputs.build-number }}" >> $GITHUB_STEP_SUMMARY
     - name: Build
       shell: bash
       run: dotnet build --configuration=Release DevSchool.Ci.sln
