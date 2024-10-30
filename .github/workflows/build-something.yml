@@ -42,5 +42,5 @@ jobs:
     if: ${{ github.ref == 'ref/heads/master'}}
     uses: ./.github/workflows/deploy-app.yml
     with:
-      build-number: ${{ github.run_number }}
+      image_number: ${{ github.run_number }}
     secrets: inherit
