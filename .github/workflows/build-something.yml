@@ -39,17 +39,8 @@ jobs:
             "GH_BUILD_NUMBER=${{ github.run_number }}"
   deploy:
     needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install and configure the Koyeb CLI
-        uses: koyeb-community/koyeb-actions@v2
-        with:
-          api_token: "${{ secrets.KOYEB_API_TOKEN }}"
-      - name: Build and deploy the application to Koyeb
-        uses: koyeb/action-git-deploy@v1
-        with:
-          app-name: human-atalanta
-          service-name: devschool-ci-test
-          service-instance-type: free
-          docker: ghcr.io/selfdeceited/devschool-ci-test:${{ inputs.image_number }}-live
-          docker-private-registry-secret: ghrc_cred
+    if: ${{ github.ref == 'ref/heads/master'}}
+    uses: ./.github/workflows/deploy-app.yml
+    with:
+      build-number: ${{ github.run_number }}
+    secrets: inherit
