@@ -19,7 +19,8 @@ jobs:
         uses: ./.github/actions/build-app
         with:
           build-number: ${{ github.run_number }}
-        
+      - name: Publish
+        run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
 
   deploy:
     needs: [build]
