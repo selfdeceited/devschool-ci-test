@@ -5,6 +5,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Execute unit tests
+        run: dotnet test
       - name: Checkout
         uses: actions/checkout@v4
       - name: setup .NET
