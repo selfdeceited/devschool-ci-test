@@ -31,14 +31,14 @@ jobs:
             cmd: devschool-ci-test.dll
 
     steps:
-      - name: Download Artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: artifact
+          name: artifacts
 
       - name: Decompress artifact
         run: >
-          tar -I "zstd -d" -xvf ./artifact.zstd --strip-components=2
+          tar -I "zstd -d" -xvf ./artifacts.zstd --strip-components=2
 
       - uses: actions/setup-dotnet@v4
         with:
