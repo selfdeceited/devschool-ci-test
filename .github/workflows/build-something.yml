@@ -17,6 +17,12 @@ jobs:
           build-number: ${{github.run_number}}
       - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
+      - name: "Upload Artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: app_${{github.run_number}}
+          path: artifacts/backend
+          retention-days: 1
   tests:
     runs-on: ubuntu-latest
     needs:
@@ -31,14 +37,10 @@ jobs:
             cmd: devschool-ci-test.dll
 
     steps:
-      - name: Download artifacts
+      - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: artifacts
-
-      - name: Decompress artifact
-        run: >
-          tar -I "zstd -d" -xvf ./artifacts.zstd --strip-components=2
+          name: app_${{github.run_number}}
 
       - uses: actions/setup-dotnet@v4
         with:
