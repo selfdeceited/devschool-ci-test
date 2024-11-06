@@ -48,7 +48,7 @@ jobs:
     env:
       SLACK_FOOTER: ''
       SLACK_ICON: ${{ github.event.sender.avatar_url }}
-      SLACK_WEBHOOK: ${{ secrets.LOOP_WEBHOOK_MOBILE }}
+      SLACK_WEBHOOK: https://dodobrands.loop.ru/hooks/zr6umqi3mjg678qdfxa5afpqto
       SLACK_CHANNEL: devschool-test-notifications
       MSG_MINIMAL: actions url,commit
     steps:
