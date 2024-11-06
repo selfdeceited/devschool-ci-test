@@ -39,8 +39,7 @@ jobs:
     secrets: inherit
 
   send-notification:
-    name: Send dev images notification
-    runs-on: ${{ inputs.runner-group }}
+    name: Send notification
     needs:
       - build
       - tests
