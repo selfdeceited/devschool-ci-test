@@ -17,7 +17,7 @@ jobs:
           build-number: ${{github.run_number}}
       - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
-        
+
   tests:
     runs-on: ubuntu-latest
     steps:
@@ -56,7 +56,7 @@ jobs:
         if: ${{ needs.build.result == 'success'}}
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_USERNAME: ${{ format('{0} - {1}', trubitcin homework, github.workflow) }}
+          SLACK_USERNAME: ${{ format('trubitcin homework - {0}', github.workflow) }}
           SLACK_COLOR: success
           SLACK_MESSAGE: |
             ${{ format('build: {0} done', github.run_number) }} 
