@@ -17,7 +17,7 @@ jobs:
           build-number: ${{github.run_number}}
       - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
-
+        
   tests:
     runs-on: ubuntu-latest
     steps:
@@ -37,3 +37,27 @@ jobs:
     with:
       image_number: ${{ github.run_number }}
     secrets: inherit
+
+  send-notification:
+    name: Send dev images notification
+    runs-on: ${{ inputs.runner-group }}
+    needs:
+      - build
+      - tests
+    if: always()
+    env:
+      SLACK_FOOTER: ''
+      SLACK_ICON: ${{ github.event.sender.avatar_url }}
+      SLACK_WEBHOOK: ${{ secrets.LOOP_WEBHOOK_MOBILE }}
+      SLACK_CHANNEL: devschool-test-notifications
+      MSG_MINIMAL: actions url,commit
+    steps:
+      - name: build success
+        if: ${{ needs.build.result == 'success'}}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_USERNAME: ${{ format('{0} - {1}', trubitcin homework, github.workflow) }}
+          SLACK_COLOR: success
+          SLACK_MESSAGE: |
+            ${{ format('build: {0} done', github.run_number) }} 
+
