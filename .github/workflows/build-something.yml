@@ -24,12 +24,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: always()
-    secrets: inherit
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: notify
         uses: ./.github/actions/notify-action/
+        secrets: inherit
         with:
           build-result: ${{ needs.build.result }}
 #      - name: Login to GitHub container registry
