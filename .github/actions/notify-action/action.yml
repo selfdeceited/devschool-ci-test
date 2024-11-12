@@ -4,10 +4,13 @@ inputs:
   build-result:
     description: Build result
     required: true
+  loop-webhook:
+    description: 'Loop WebHook'
+    required: true
 runs:
   using: composite
   env:
-      SLACK_WEBHOOK: ${{ secrets.LOOP_WEBHOOK }}
+      SLACK_WEBHOOK: ${{ inputs.loop-webhook }}
       SLACK_CHANNEL: devschool-test-notifications
       SLACK_USERNAME: Donald Trump
       SLACK_ICON: ':sad-frog:'
