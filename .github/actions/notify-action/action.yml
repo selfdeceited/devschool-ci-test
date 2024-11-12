@@ -9,7 +9,7 @@ runs:
   env:
       SLACK_WEBHOOK: ${{ secrets.LOOP_WEBHOOK }}
       SLACK_CHANNEL: devschool-test-notifications
-      SLACK_USERNAME: Donald
+      SLACK_USERNAME: Donald Trump
       SLACK_ICON: ':sad-frog:'
   steps:
     - name: Notify failure
