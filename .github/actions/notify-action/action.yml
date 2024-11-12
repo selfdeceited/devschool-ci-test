@@ -7,13 +7,6 @@ inputs:
   loop-webhook:
     description: 'Loop WebHook'
     required: true
-
-env:
-  SLACK_WEBHOOK: ${{ inputs.loop-webhook }}
-  SLACK_CHANNEL: devschool-test-notifications
-  SLACK_USERNAME: Donald Trump
-  SLACK_ICON: ':sad-frog:'
-
 runs:
   using: composite
   steps:
@@ -23,6 +16,10 @@ runs:
       if: ${{ inputs.build-result == 'failure' }}
       uses: rtCamp/action-slack-notify@v2.3.2
       env:
+        SLACK_WEBHOOK: ${{ inputs.loop-webhook }}
+        SLACK_CHANNEL: devschool-test-notifications
+        SLACK_USERNAME: Donald Trump
+        SLACK_ICON: ':sad-frog:'
         SLACK_TITLE: BUILD FAILED
         SLACK_COLOR: "#f50057"
         SLACK_MESSAGE: |
@@ -32,6 +29,10 @@ runs:
       if: ${{ inputs.build-result == 'success' && github.ref == 'refs/heads/main' }}
       uses: rtCamp/action-slack-notify@v2.3.2
       env:
+        SLACK_WEBHOOK: ${{ inputs.loop-webhook }}
+        SLACK_CHANNEL: devschool-test-notifications
+        SLACK_USERNAME: Donald Trump
+        SLACK_ICON: ':sad-frog:'
         SLACK_TITLE: BUILD SUCCEEDED
         SLACK_COLOR: "#00e676"
         SLACK_MESSAGE: |
