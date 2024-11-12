@@ -25,7 +25,9 @@ jobs:
     needs: build
     if: always()
     steps:
-      - name: build
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: notify
         uses: ./.github/actions/notify-action/
         with:
           build-result: ${{ needs.build.result }}
