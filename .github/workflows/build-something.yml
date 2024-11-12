@@ -12,14 +12,23 @@ jobs:
         with:
           dotnet-version: '8.0.100'
       - name: build
-        uses: ./.github/actions/build-app
+        uses: ./.github/actions/build-app/
         with:
           build-number: ${{github.run_number}}
       - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
       - name: Run unit tests
         run: dotnet test
-        
+  notify:
+    name: notifications
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - name: build
+        uses: ./.github/actions/notify-action/
+        with:
+          build-result: ${{ needs.build.result }}
 #      - name: Login to GitHub container registry
 #        uses: docker/login-action@v3
 #        with:
