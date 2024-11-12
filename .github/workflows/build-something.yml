@@ -12,31 +12,50 @@ jobs:
         with:
           dotnet-version: '8.0.100'
       - name: build
-        uses: ./.github/actions/build-app
+        uses: ./.github/actions/build-app/
         with:
           build-number: ${{github.run_number}}
       - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
-      - name: Login to GitHub container registry
-        uses: docker/login-action@v3
+      - name: Run unit tests
+        run: dotnet test
+  notify:
+    name: notifications
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: notify
+        uses: ./.github/actions/notify-action/
+        env:
+          SLACK_USERNAME: Donald Trump
+          SLACK_CHANNEL: devschool-test-notifications
+          SLACK_ICON: ':sad-frog:'
+          SLACK_WEBHOOK: ${{ secrets.LOOP_WEBHOOK }}
         with:
-          registry: ghcr.io
-          username: selfdeceited
-          password: ${{ secrets.GHCR_PUBLISH_TOKEN }}
-      - name: Build and push image
-        uses: docker/build-push-action@v5
-        with:
-          file: ./artifacts/backend/Dockerfile
-          github-token: ${{ secrets.GHCR_PUBLISH_TOKEN }}
-          push: true
-          context: .
-          tags: ghcr.io/selfdeceited/devschool-ci-test:${{ github.run_number }}-post
-          build-args: |
-            "GH_BUILD_NUMBER=${{ github.run_number }}"
-  deploy:
-    needs: [build]
-    if: ${{ github.ref == 'refs/heads/main' }}
-    uses: ./.github/workflows/deploy-app.yml
-    with:
-      image_number: ${{ github.run_number }}
-    secrets: inherit
+          build-result: ${{ needs.build.result }}
+#      - name: Login to GitHub container registry
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: selfdeceited
+#          password: ${{ secrets.GHCR_PUBLISH_TOKEN }}
+#      - name: Build and push image
+#        uses: docker/build-push-action@v5
+#        with:
+#          file: ./artifacts/backend/Dockerfile
+#          github-token: ${{ secrets.GHCR_PUBLISH_TOKEN }}
+#          push: true
+#          context: .
+#          tags: ghcr.io/selfdeceited/devschool-ci-test:${{ github.run_number }}-post
+#          build-args: |
+#            "GH_BUILD_NUMBER=${{ github.run_number }}"
+#  deploy:
+#    needs: [build]
+#    if: ${{ github.ref == 'refs/heads/main' }}
+#    uses: ./.github/workflows/deploy-app.yml
+#    with:
+#      image_number: ${{ github.run_number }}
+#    secrets: inherit

@@ -1,0 +1,27 @@
+name: 'notify'
+description: 'this action notify about workflow status'
+inputs:
+  build-result:
+    description: Build result
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Notify failure
+      if: ${{ inputs.build-result == 'failure' }}
+      uses: rtCamp/action-slack-notify@v2.3.2
+      env:
+        SLACK_TITLE: BUILD FAILED
+        SLACK_COLOR: "#f50057"
+        SLACK_MESSAGE: |
+          ${{ format('Author: {0}', github.actor) }}
+          ${{ format('Commit: {0}', github.event.head_commit.message) }}
+    - name: Notify on success
+      if: ${{ inputs.build-result == 'success' && github.ref == 'refs/heads/main' }}
+      uses: rtCamp/action-slack-notify@v2.3.2
+      env:
+        SLACK_TITLE: BUILD SUCCEEDED
+        SLACK_COLOR: "#00e676"
+        SLACK_MESSAGE: |
+          ${{ format('Author: {0}', github.actor) }}
+          ${{ format('Commit: {0}', github.event.head_commit.message) }}
