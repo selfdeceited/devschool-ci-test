@@ -7,13 +7,15 @@ inputs:
   loop-webhook:
     description: 'Loop WebHook'
     required: true
+
+env:
+  SLACK_WEBHOOK: ${{ inputs.loop-webhook }}
+  SLACK_CHANNEL: devschool-test-notifications
+  SLACK_USERNAME: Donald Trump
+  SLACK_ICON: ':sad-frog:'
+
 runs:
   using: composite
-  env:
-      SLACK_WEBHOOK: ${{ inputs.loop-webhook }}
-      SLACK_CHANNEL: devschool-test-notifications
-      SLACK_USERNAME: Donald Trump
-      SLACK_ICON: ':sad-frog:'
   steps:
     - name: Checkout
       uses: actions/checkout@v4
