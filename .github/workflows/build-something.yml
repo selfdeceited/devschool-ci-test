@@ -42,6 +42,7 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: send message
-        run: echo HW!
-#        uses: ./.github/actions/loop-send-message@v1
-#      secrets: inherit
+#        run: echo HW!
+        uses: ./.github/actions/loop-send-message
+        with:
+          build-number: ${{github.run_number}}
