@@ -1,0 +1,19 @@
+# https://developers.loop.ru/integrate/webhooks/incoming/
+
+name: 'send message'
+description: 'message to im when build is finished for example'
+inputs:
+  message:
+    description: Custom message for send
+    required: true
+  url:
+    description: Loop secret url
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: 'Let the world know!'
+      shell: bash
+      run: |
+        echo "### ${{ inputs.message }}" >> $GITHUB_STEP_SUMMARY
+        curl -i -X POST -H 'Content-Type: application/json' -d '{"text": "${{ inputs.message }}"}' ${{ inputs.url }}
