@@ -25,12 +25,12 @@ jobs:
     steps:
       - name: Set status if check success
         if: ${{ needs.build-and-test.result == 'success' }}
-#        run: echo "✅App was build and test success with number build is ${{ github.run_number }}"
-        run: echo "CHECK_RESULT_MESSAGE=✅App was build and test success with number build is ${{ github.run_number }}" >> $GITHUB_ENV
+#        run: echo "✅ App was build and test success with number build is ${{ github.run_number }}"
+        run: echo "CHECK_RESULT_MESSAGE=✅ App was build and test success with number build is ${{ github.run_number }}" >> $GITHUB_ENV
       - name: Set status icon if check failed
         if: ${{ needs.build-and-test.result.outcome == 'failure' || needs.build-and-test.result.outcome == 'cancelled' }}
-#        run: echo "❌App build and test failed with number build is ${{ github.run_number }}"
-        run: echo "CHECK_RESULT_MESSAGE=❌App build and test failed with number build is ${{ github.run_number }}" >> $GITHUB_ENV
+#        run: echo "❌ App build and test failed with number build is ${{ github.run_number }}"
+        run: echo "CHECK_RESULT_MESSAGE=❌ App build and test failed with number build is ${{ github.run_number }}" >> $GITHUB_ENV
       - name: test message
         run: echo "${{ env.CHECK_RESULT_MESSAGE }}"
 
