@@ -30,4 +30,4 @@ jobs:
         uses: ./.github/actions/loop-send-message
         with:
           message: App was build and test with number build is ${{ github.run_number }}
-          url: ${{ secrets.loop-url }}
+          url: ${{ secrets.LOOP_URL }}
