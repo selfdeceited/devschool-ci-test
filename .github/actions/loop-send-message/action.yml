@@ -16,4 +16,4 @@ runs:
       shell: bash
       run: |
         echo "### ${{ inputs.message }}" >> $GITHUB_STEP_SUMMARY
-        curl -i -X POST -H 'Content-Type: application/json' -d '{"text": "Hello, this is some text\nThis is more text. :tada:"}' ${{ inputs.url }}
+        curl -i -X POST -H 'Content-Type: application/json' -d '{"text": "${{ inputs.message }}"}' ${{ inputs.url }}
