@@ -1,8 +1,8 @@
 name: 'send message'
 description: 'message to im when build is finished for example'
 inputs:
-  build-number:
-    description: Build Number
+  message:
+    description: Custom message for send
     required: true
 runs:
   using: composite
@@ -10,15 +10,5 @@ runs:
     - name: 'Let the world know!'
       shell: bash
       run: |
-        echo "### Building build ${{ inputs.build-number }}" >> $GITHUB_STEP_SUMMARY
-    - name: build
-      shell: bash
-      env:
-        GH_BUILD_NUMBER: ${{ inputs.build-number }}
-      run: dotnet build --configuration Release DevSchool.Ci.sln
-    - name: save artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: built-app
-        path: ./src/bin/Release/net8.0
-        retention-days: '1'
+        echo "### Building build ${{ inputs.message }}" >> $GITHUB_STEP_SUMMARY
+
