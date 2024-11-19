@@ -25,10 +25,10 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Set status if check success
-        if: ${{ always() && (steps.check-step-id.outcome == 'success') }}
+        if: ${{ steps.check-step-id.outcome == 'success' }}
         run: echo "CHECK_RESULT_MESSAGE=✅App was build and test success with number build is ${{ github.run_number }}" >> $GITHUB_ENV
       - name: Set status icon if check failed
-        if: ${{ always() && (steps.check-step-id.outcome == 'failure' || steps.check-step-id.outcome == 'cancelled') }}
+        if: ${{ steps.check-step-id.outcome == 'failure' || steps.check-step-id.outcome == 'cancelled' }}
         run: echo "CHECK_RESULT_MESSAGE=❌App build and test failed with number build is ${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: checkout
