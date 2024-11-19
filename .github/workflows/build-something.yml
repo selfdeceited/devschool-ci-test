@@ -17,7 +17,6 @@ jobs:
         with:
           build-number: ${{github.run_number}}
       - name: test
-        id: check-step-id
         run: dotnet test DevSchool.Ci.sln
   notification:
     runs-on: ubuntu-latest
@@ -25,11 +24,13 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Set status if check success
-        if: ${{ steps.check-step-id.outcome == 'success' }}
-        run: echo "CHECK_RESULT_MESSAGE=✅App was build and test success with number build is ${{ github.run_number }}" >> $GITHUB_ENV
+        if: ${{ needs.build-and-test.result == 'success' }}
+        run: echo "✅App was build and test success with number build is ${{ github.run_number }}"
+#        run: echo "CHECK_RESULT_MESSAGE=✅App was build and test success with number build is ${{ github.run_number }}" >> $GITHUB_ENV
       - name: Set status icon if check failed
-        if: ${{ steps.check-step-id.outcome == 'failure' || steps.check-step-id.outcome == 'cancelled' }}
-        run: echo "CHECK_RESULT_MESSAGE=❌App build and test failed with number build is ${{ github.run_number }}" >> $GITHUB_ENV
+        if: ${{ needs.build-and-test.result.outcome == 'failure' || needs.build-and-test.result.outcome == 'cancelled' }}
+        run: echo "❌App build and test failed with number build is ${{ github.run_number }}"
+#        run: echo "CHECK_RESULT_MESSAGE=❌App build and test failed with number build is ${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: checkout
         uses: actions/checkout@v4
