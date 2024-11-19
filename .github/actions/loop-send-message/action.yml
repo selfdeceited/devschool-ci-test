@@ -1,5 +1,5 @@
-name: 'build prod-ready app'
-description: 'this is a description'
+name: 'send message'
+description: 'message to im when build is finished for example'
 inputs:
   build-number:
     description: Build Number

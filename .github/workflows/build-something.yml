@@ -16,6 +16,9 @@ jobs:
         uses: ./.github/actions/build-app
         with:
           build-number: ${{github.run_number}}
+  tests:
+    runs-on: ubuntu-latest
+    steps:
       - name: tests
         run: dotnet test DevSchool.Ci.sln
   #      - name: publish artifacts
@@ -36,7 +39,7 @@ jobs:
   #          tags: ghcr.io/selfdeceited/devschool-ci-test:${{ github.run_number }}-post
   #          build-args: |
   #            "GH_BUILD_NUMBER=${{ github.run_number }}"
-  deploy:
+  notification:
     needs: [build, tests]
     if: ${{ github.ref == 'refs/heads/main' }}
     uses: ./.github/actions/loop-send-message
