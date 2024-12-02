@@ -16,7 +16,7 @@ jobs:
         with:
           build-number: ${{github.run_number}}
       - name: run tests
-        run: dotnet tests
+        run: dotnet test
       - name: notify
         uses: ./.github/actions/notify-build-status
 #      - name: publish artifacts
