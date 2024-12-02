@@ -18,6 +18,7 @@ jobs:
       - name: run tests
         run: dotnet test
       - name: notify
+        if: always()
         uses: ./.github/actions/notify-build-status
 #      - name: publish artifacts
 #        with:
