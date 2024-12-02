@@ -1,4 +1,8 @@
 name: 'build prod-ready app'
+inputs:
+  webhook_url:
+    description: The Mattermost webhook URL
+    required: true
 runs:
   using: composite
   steps:
@@ -8,4 +12,4 @@ runs:
       with:
         type: ${{ job.status }}
         job_name: 'Triggered by:  ${{ github.triggering_actor }}'
-        url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
+        url: ${{ inputs.MATTERMOST_WEBHOOK_URL }}
