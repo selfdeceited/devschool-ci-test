@@ -12,4 +12,4 @@ runs:
       with:
         type: ${{ job.status }}
         job_name: 'Triggered by:  ${{ github.triggering_actor }}'
-        url: ${{ inputs.MATTERMOST_WEBHOOK_URL }}
+        url: 'https://dodobrands.loop.ru/hooks/rxwtrcc8cifuf8t9w6c1t41d3a'
