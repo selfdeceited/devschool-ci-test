@@ -15,6 +15,9 @@ jobs:
         uses: ./.github/actions/build-app
         with:
           build-number: ${{github.run_number}}
+      - name: notify
+        needs: [build]
+        uses: ./.github/actions/notify-build-status
       - name: publish artifacts
         run: dotnet publish --no-restore --no-build --configuration Release --output artifacts/backend src/devschool-ci-test.csproj
       - name: Login to GitHub container registry

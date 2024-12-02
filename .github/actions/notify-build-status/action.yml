@@ -1,0 +1,11 @@
+name: 'build prod-ready app'
+runs:
+  using: composite
+  steps:
+    - name: Send loop notification
+      uses: tferreira/matterfy@releases/v1
+      if: (success() && github.ref == 'refs/heads/main') || failure()
+      with:
+        type: ${{ job.status }}
+        job_name: 'Triggered by:  ${{ github.triggering_actor }}'
+        url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
