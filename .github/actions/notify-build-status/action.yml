@@ -1,0 +1,23 @@
+name: 'build prod-ready app'
+inputs:
+  webhook_url:
+    description: The Mattermost webhook URL
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Send notification on success
+      uses: tferreira/matterfy@releases/v1
+      if: ${{ job.status == 'success' && github.ref == 'refs/heads/main' }}
+      with:
+        type: ${{ job.status }}
+        job_name: 'Triggered by:  ${{ github.triggering_actor }}'
+        url: ${{ inputs.webhook_url }}
+
+    - name: Send notification on failure
+      if: ${{ job.status == 'failure' }}
+      uses: tferreira/matterfy@releases/v1
+      with:
+        type: failure
+        job_name: 'Triggered by: ${{ github.actor }}'
+        url: ${{ inputs.webhook_url }}
