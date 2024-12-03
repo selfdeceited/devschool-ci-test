@@ -6,10 +6,18 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Send loop notification
+    - name: Send notification on success
       uses: tferreira/matterfy@releases/v1
-      if: ${{ (success() && github.ref == 'refs/heads/main') || failure() }}
+      if: ${{ job.status == 'success' && inputs.branch == 'refs/heads/main' }}
       with:
         type: ${{ job.status }}
         job_name: 'Triggered by:  ${{ github.triggering_actor }}'
+        url: 'https://dodobrands.loop.ru/hooks/rxwtrcc8cifuf8t9w6c1t41d3a'
+
+    - name: Send notification on failure
+      if: ${{ job.status == 'failure' }}
+      uses: tferreira/matterfy@releases/v1
+      with:
+        type: failure
+        job_name: 'Triggered by: ${{ github.actor }}'
         url: 'https://dodobrands.loop.ru/hooks/rxwtrcc8cifuf8t9w6c1t41d3a'
