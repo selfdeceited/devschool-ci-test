@@ -8,7 +8,7 @@ runs:
   steps:
     - name: Send notification on success
       uses: tferreira/matterfy@releases/v1
-      if: ${{ job.status == 'success' && inputs.branch == 'refs/heads/main' }}
+      if: ${{ job.status == 'success' && github.ref == 'refs/heads/main' }}
       with:
         type: ${{ job.status }}
         job_name: 'Triggered by:  ${{ github.triggering_actor }}'
