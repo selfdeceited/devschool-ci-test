@@ -20,6 +20,8 @@ jobs:
       - name: notify
         if: always()
         uses: ./.github/actions/notify-build-status
+        with:
+          webhook_url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
 #      - name: publish artifacts
 #        with:
 #          webhook_url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}

@@ -12,7 +12,7 @@ runs:
       with:
         type: ${{ job.status }}
         job_name: 'Triggered by:  ${{ github.triggering_actor }}'
-        url: 'https://dodobrands.loop.ru/hooks/rxwtrcc8cifuf8t9w6c1t41d3a'
+        url: ${{ inputs.webhook_url }}
 
     - name: Send notification on failure
       if: ${{ job.status == 'failure' }}
@@ -20,4 +20,4 @@ runs:
       with:
         type: failure
         job_name: 'Triggered by: ${{ github.actor }}'
-        url: 'https://dodobrands.loop.ru/hooks/rxwtrcc8cifuf8t9w6c1t41d3a'
+        url: ${{ inputs.webhook_url }}
